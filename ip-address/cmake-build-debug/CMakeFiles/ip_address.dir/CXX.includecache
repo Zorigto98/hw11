@@ -1,0 +1,14 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+D:/Study/SkillBox/11 les/Homework/ip-address/main.cpp
+iostream
+-
+string
+D:/Study/SkillBox/11 les/Homework/ip-address/string
+
