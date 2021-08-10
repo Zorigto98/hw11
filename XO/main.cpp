@@ -1,6 +1,5 @@
 #include <iostream>
 #include "string"
-#include "math.h"
 
 using namespace std;
 
@@ -83,18 +82,15 @@ int main() {
 
    int countX=count_Ch('X', line1, line2, line3);
    int countO=count_Ch('O', line1, line2, line3);
-   //int countPoint=count_Ch('.', line1, line2, line3);
 
-    // Разница между кол-вом крестиков и ноликов
     if (abs(countO-countX)==1 || countO==countX)
     {
         bool winX=who_won(line1, line2, line3, 'X');
         bool winO=who_won(line1, line2, line3, 'O');
 
-        if (winO && winX) cout << "Incorrect";
-        else if (!winO && !winX || (countX==countO)) cout << "Nobody";
-        else if (winX) cout << "Petya won";
+        if (winX) cout << "Petya won";
         else if (winO) cout << "Vanya won";
+        else if (countX==countO) cout << "Nobody";
     }
     else cout << "Incorrect";
 }

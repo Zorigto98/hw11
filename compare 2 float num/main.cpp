@@ -53,55 +53,44 @@ string input (int name)
     return num;
 }
 
-int convert_Str2Int (int start, int finish, string num)
+int convert_Str2Int (string num)
 {
     string num_pt;
+    int start=0;
+    int finish=num.find('.');
+    for (int i=start; i<finish; i++)
     {
-        for (int i=start; i<finish; i++)
-        {
-            num_pt+=num[i];
-        }
-        return stoi(num_pt);
+        num_pt+=num[i];
     }
+    return stoi(num_pt);
+}
+
+int convert_Str2Int2 (string num)
+{
+    while (num[num.length()-1]=='0')
+    {
+        num.pop_back();
+    }
+
+    int start=num.find('.')+1;
+    int finish=num.length();
+    string num_pt;
+    for (int i=start; i<finish; i++)
+    {
+        num_pt+=num[i];
+    }
+    return stoi(num_pt);
 }
 
 void compare (string num1, string num2)
 {
-    int num1_pt1, num1_pt2, num2_pt1, num2_pt2;
+    int num1Int, num2Int;
 
-    if (num1.find('.')>0)
-    {
-        num1_pt1=convert_Str2Int(0, num1.find('.'), num1);
-        num1_pt2=convert_Str2Int(num1.find('.')+1, num1.length(), num1);
+    num1Int=convert_Str2Int(num1)+convert_Str2Int2(num1);
+    num2Int=convert_Str2Int(num2)+convert_Str2Int2(num2);
 
-        num2_pt1=convert_Str2Int(0, num2.find('.'), num2);
-        num2_pt2=convert_Str2Int(num2.find('.')+1, num2.length(), num2);
-    }
-    else if (num2.find('.')>0)
-    {
-        num2_pt1=convert_Str2Int(0, num2.find('.'), num2);
-        num2_pt2=convert_Str2Int(num2.find('.')+1, num2.length(), num2);
-    }
-    else if (num1.find('.')<0 && num2.find('.')<0)
-    {
-        num1_pt1=stoi(num1);
-        num1_pt2=0;
-        num2_pt1=stoi(num2);
-        num2_pt2=0;
-    }
-
-    if (num1_pt1==num2_pt1 && num1_pt2==num2_pt2) cout << "Equal";
-
-    else if (num1_pt1!=num2_pt1)
-    {
-        if (num1_pt1>num2_pt1) cout << "More";
-        else cout << "Less";
-    }
-    else
-    {
-        if (num1_pt1>num2_pt1) cout << "More";
-        else cout << "Less";
-    }
+    if (num1Int==num2Int) cout << "Equal";
+    else num1Int<num2Int ? (cout << "Less") : (cout << "More");
 }
 
 int main() {

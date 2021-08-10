@@ -14,9 +14,14 @@ int Convert_Str2Int (int start, int finish, string address)
     else return stoi(add_pt);
 }
 
+bool checkValue (int ip_pt)
+{
+    if (ip_pt<0 || ip_pt>255) return false;
+    return true;
+}
+
 bool check_ip_address (string address)
 {
-    int ip_pt1, ip_pt2, ip_pt3, ip_pt4;
     string valid_char="0123456789.";
 
     int count_point=0; // проверка на три точки и на допустимые значения
@@ -34,28 +39,18 @@ bool check_ip_address (string address)
         if (address[i]=='.' && address[i+1]=='.') return false;
     }
 
-    //разделение на 4 части ip адреса
+    int ip_pt;
     int st_point=0;
-    int fn_point=address.find('.');
-    ip_pt1=Convert_Str2Int(st_point, fn_point, address);
 
-    st_point=fn_point+1;
-    fn_point=address.find('.', st_point);
-    ip_pt2=Convert_Str2Int(st_point, fn_point, address);
-
-    st_point=fn_point+1;
-    fn_point=address.find('.', st_point);
-    ip_pt3=Convert_Str2Int(st_point, fn_point, address);
-
-    st_point=fn_point+1;
-    fn_point=address.length();
-    ip_pt4=Convert_Str2Int(st_point, fn_point, address);
-
-    // проверка на значение
-    if (ip_pt1<0 || ip_pt1>255 ||
-        ip_pt2<0 || ip_pt2>255 ||
-        ip_pt3<0 || ip_pt3>255 ||
-        ip_pt4<0 || ip_pt4>255) return false;
+    for (int i=1; i<=4; i++)
+    {
+        int fn_point=address.find('.', st_point);
+        if (i==4) fn_point=address.length();
+        ip_pt=Convert_Str2Int(st_point, fn_point, address);
+        if (ip_pt<0 || ip_pt>255) return false;
+        //checkValue(ip_pt) ;
+        st_point=fn_point+1;
+    }
 
     return true;
 }
@@ -65,6 +60,20 @@ int main()
     string ip_address;
     cout << "Input ip-address" << endl;
     cin >> ip_address;
+
+    int ip_pt;
+    int st_point=0;
+
+    for (int i=1; i<=4; i++)
+    {
+        int fn_point=ip_address.find('.', st_point);
+        if (i==4) fn_point=ip_address.length();
+        //cout << st_point << " " << fn_point << endl;
+        ip_pt=Convert_Str2Int(st_point, fn_point, ip_address);
+        checkValue(ip_pt);
+        cout << checkValue(ip_pt) << endl;
+        st_point=fn_point+1;
+    }
 
     if (check_ip_address(ip_address)) cout << "Yes";
     else cout << "No";
