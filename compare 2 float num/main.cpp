@@ -53,8 +53,17 @@ string input (int name)
     return num;
 }
 
-int convert_Str2Int (string num)
+string split (string num)
 {
+    bool checkEndZero=false;
+    while (!checkEndZero)
+    {
+        if (num[0]=='0' && num[1]!='.')
+        {
+            num.erase(0, 1);
+        }
+        else checkEndZero=true;
+    }
     string num_pt;
     int start=0;
     int finish=num.find('.');
@@ -62,10 +71,10 @@ int convert_Str2Int (string num)
     {
         num_pt+=num[i];
     }
-    return stoi(num_pt);
+    return num_pt;
 }
 
-int convert_Str2Int2 (string num)
+string split2 (string num)
 {
     while (num[num.length()-1]=='0')
     {
@@ -79,18 +88,112 @@ int convert_Str2Int2 (string num)
     {
         num_pt+=num[i];
     }
-    return stoi(num_pt);
+    return num_pt;
 }
 
 void compare (string num1, string num2)
 {
-    int num1Int, num2Int;
+    bool checkEqual=true;
+    if (num1[0]=='-' && num2[0]!='-')
+    {
+        cout << "Less";
+        checkEqual=false;
+    }
+    if (num1[0]!='-' && num2[0]=='-')
+    {
+        cout << "More";
+        checkEqual=false;
+    }
 
-    num1Int=convert_Str2Int(num1)+convert_Str2Int2(num1);
-    num2Int=convert_Str2Int(num2)+convert_Str2Int2(num2);
+    bool checkMinus=false;
+    if (num1[0]=='-' && num2[0]=='-')
+    {
+        num1.erase(0,1);
+        num2.erase(0,1);
+        checkMinus=true;
+    }
 
-    if (num1Int==num2Int) cout << "Equal";
-    else num1Int<num2Int ? (cout << "Less") : (cout << "More");
+    string num1p1, num2p1;
+
+    num1p1=split(num1);
+    num2p1=split(num2);
+
+    if (num1p1.length()!=num2p1.length())
+    {
+        if (num1p1.length()<num2p1.length())
+        {
+            checkMinus ? cout << "More" : cout << "Less";
+        }
+        else
+        {
+            checkMinus ? cout << "Less" : cout << "More";
+        }
+        checkEqual=false;
+    }
+    else
+    {
+        for (int i=0; i<num1p1.length(); i++)
+        {
+            if (num1p1[i]!=num2p1[i])
+            {
+                if (num1p1[i]<num2p1[i])
+                {
+                    checkMinus ? cout << "More" : cout << "Less";
+                    checkEqual=false;
+                }
+                else
+                {
+                    checkMinus ? cout << "Less" : cout << "More";
+                    checkEqual=false;
+                }
+                break;
+            }
+        }
+    }
+
+    if (checkEqual)  // проверка дробной части числа
+    {
+        string num1p2, num2p2;
+
+        num1p2=split2(num1);
+        num2p2=split2(num2);
+
+        if (num1p2.length()!=num2p2.length())
+        {
+            if (num1p2.length()<num2p2.length())
+            {
+                checkMinus ? cout << "Less" : cout << "More";
+                checkEqual=false;
+            }
+            else
+            {
+                checkMinus ? cout << "More" : cout << "Less";
+                checkEqual=false;
+            }
+        }
+        else
+        {
+            for (int i=0; i<num1p2.length(); i++)
+            {
+                if (num1p2[i]!=num2p2[i])
+                {
+                    if (num1p2[i]<num2p2[i])
+                    {
+                        checkMinus ? cout << "More" : cout << "Less";
+                        checkEqual=false;
+                    }
+                    else
+                    {
+                        checkMinus ? cout << "Less" : cout << "More";
+                        checkEqual=false;
+                    }
+
+                    break;
+                }
+            }
+        }
+    }
+    if (checkEqual) cout << "Equal";
 }
 
 int main() {
