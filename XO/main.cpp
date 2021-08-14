@@ -83,14 +83,15 @@ int main() {
    int countX=count_Ch('X', line1, line2, line3);
    int countO=count_Ch('O', line1, line2, line3);
 
-    if (abs(countO-countX)==1 || countO==countX)
+    if (countX-countO==1 || countX-countO==0)
     {
         bool winX=who_won(line1, line2, line3, 'X');
         bool winO=who_won(line1, line2, line3, 'O');
 
-        if (winX) cout << "Petya won";
-        else if (winO) cout << "Vanya won";
-        else if (countX==countO) cout << "Nobody";
+        if (winX && countX-countO==1) cout << "Petya won";
+        else if (winO && countX-countO==0) cout << "Vanya won";
+        else if (countX==countO && !winX && !winO) cout << "Nobody";
+        else cout << "Incorrect";
     }
     else cout << "Incorrect";
 }

@@ -50,6 +50,7 @@ string input (int name)
         if (!checkNum(num)) cout << "Number" << name << " entered incorrectly. Try again." << endl;
     }
     while(!checkNum(num));
+    if (num=="-0.0") num="0.0";
     return num;
 }
 
@@ -94,6 +95,7 @@ string split2 (string num)
 void compare (string num1, string num2)
 {
     bool checkEqual=true;
+
     if (num1[0]=='-' && num2[0]!='-')
     {
         cout << "Less";
